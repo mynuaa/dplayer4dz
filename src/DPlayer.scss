@@ -860,7 +860,7 @@
                 input {
                     max-height: 0;
                     max-width: 0;
-                    display: none;
+                    display: none !important;
                 }
                 input + label {
                     display: inline-block;

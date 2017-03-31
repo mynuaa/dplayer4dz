@@ -674,8 +674,11 @@ class DPlayer {
             closeComment();
             this.dan.splice(this.danIndex, 0, danmakuData);
             this.danIndex++;
-            const item = this.pushDanmaku(htmlEncode(danmakuData.text), danmakuData.color, danmakuData.type);
-            item.style.border = `2px solid ${this.option.theme}`;
+            // disable this in live
+            if (!(enablehls && Hls.isSupported())) {
+                const item = this.pushDanmaku(htmlEncode(danmakuData.text), danmakuData.color, danmakuData.type);
+                item.style.border = `2px solid ${this.option.theme}`;
+            }
         };
 
         const closeCommentSetting = () => {
@@ -922,7 +925,7 @@ class DPlayer {
         if (this.video.paused) {
             this.bezel.innerHTML = svg('play');
             this.bezel.classList.add('dplayer-bezel-transition');
-        }    
+        }
 
         this.playButton.innerHTML = svg('pause');
 
@@ -1025,10 +1028,10 @@ class DPlayer {
         const isMobile = /mobile/i.test(window.navigator.userAgent);
         let apiurl;
         if (this.option.danmaku.maximum) {
-            apiurl = `${this.option.danmaku.api}?id=${this.option.danmaku.id}&max=${this.option.danmaku.maximum}`;
+            apiurl = `${this.option.danmaku.api}&player=${this.option.danmaku.id}&max=${this.option.danmaku.maximum}`;
         }
         else {
-            apiurl = `${this.option.danmaku.api}?id=${this.option.danmaku.id}`;
+            apiurl = `${this.option.danmaku.api}&player=${this.option.danmaku.id}`;
         }
         let endpoints = (this.option.danmaku.addition || []).slice(0);
         endpoints.push(apiurl);
